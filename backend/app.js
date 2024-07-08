@@ -1,11 +1,17 @@
 import express from "express";
+const app = express();
 import dotenv from "dotenv";
-import prodductRoutes from "./routes/products.js";
 import { connectDatabase } from "./config/dbConnect.js";
 import errorMiddleware from "./middlewares/error.js";
 
+// Import all routes
+import prodductRoutes from "./routes/products.js";
 
-const app = express();
+// Handle Uncaught exceptions
+process.on('uncaughtException', (err) => {
+    console.log(`ERROR: ${err}`);
+    console.log("Shutting down server due to uncaught exception");
+});
 
 dotenv.config({path: "backend/config/config.env"});
 
