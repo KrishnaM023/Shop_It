@@ -1,5 +1,6 @@
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import User from "../models/user.js";
+import { getResetPasswordTemplate } from "../utils/emailTemplates.js"
 import ErrorHandler from "../utils/errorhandler.js";
 import sendToken from "../utils/sendToken.js";
 import sendEmail from "../utils/sendEmail.js"
