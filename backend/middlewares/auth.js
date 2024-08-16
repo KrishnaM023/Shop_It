@@ -4,7 +4,7 @@ import User from "../models/user.js";
 import jwt from "jsonwebtoken";
 
 // Check if user is authenticated or not
-export default isAuthenticatedUser = catchAssyncErrors(async (req, res, next) => {
+export const isAuthenticatedUser = catchAssyncErrors(async (req, res, next) => {
     const { token } = req.cookies;
 
     if(!token) {
