@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 import {
   allUsers,
   deleteUser,
@@ -11,10 +11,11 @@ import {
   resetPassword,
   updatePassword,
   updateProfile,
-  updateUser
-} from '../controllers/authControllers.js';
+  updateUser,
+  uploadAvatar,
+} from "../controllers/authControllers.js";
 
-import { authorizeRoles, isAuthenticatedUser } from "../middlewares/auth.js"
+import { authorizeRoles, isAuthenticatedUser } from "../middlewares/auth.js";
 const router = express.Router();
 
 router.route("/register").post(registerUser);
@@ -27,6 +28,7 @@ router.route("/password/reset/:token").put(resetPassword);
 router.route("/me").get(isAuthenticatedUser, getUserProfile);
 router.route("/me/update").put(isAuthenticatedUser, updateProfile);
 router.route("/password/update").put(isAuthenticatedUser, updatePassword);
+router.route("/me/upload_avatar").put(isAuthenticatedUser, uploadAvatar);
 
 router
   .route("/admin/users")
@@ -35,7 +37,7 @@ router
 router
   .route("/admin/users/:id")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getUserDetails)
-  .put(isAuthenticatedUser, authorizeRoles("admin"), updateUser) 
-  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser); 
+  .put(isAuthenticatedUser, authorizeRoles("admin"), updateUser)
+  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser);
 
 export default router;
