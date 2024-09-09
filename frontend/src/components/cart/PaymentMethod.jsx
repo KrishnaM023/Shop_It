@@ -3,7 +3,10 @@ import MetaData from "../layout/MetaData";
 import { useSelector } from "react-redux";
 import CheckoutSteps from "./CheckoutSteps";
 import { calculateOrderCost } from "../../helpers/helpers";
-import { useCreateNewOrderMutation } from "../../redux/api/orderApi";
+import {
+  useCreateNewOrderMutation,
+  useStripeCheckoutSessionMutation,
+} from "../../redux/api/orderApi";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -14,8 +17,22 @@ const PaymentMethod = () => {
 
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
 
-  const [createNewOrder, { isLoading, error, isSuccess }] =
-    useCreateNewOrderMutation();
+  const [createNewOrder, { error, isSuccess }] = useCreateNewOrderMutation();
+
+  const [
+    stripeCheckoutSession,
+    { data: checkoutData, error: chechkoutError, isLoading },
+  ] = useStripeCheckoutSessionMutation();
+
+  useEffect(() => {
+    if (checkoutData) {
+      window.location.href = checkoutData?.url;
+    }
+
+    if (chechkoutError) {
+      toast.error(chechkoutError?.data?.message);
+    }
+  }, [checkoutData, chechkoutError]);
 
   useEffect(() => {
     if (error) {
@@ -53,7 +70,16 @@ const PaymentMethod = () => {
 
     if (method === "Card") {
       // Stripe Checkout
-      alert("Card");
+      const orderData = {
+        shippingInfo,
+        orderItems: cartItems,
+        itemsPrice,
+        shippingAmount: shippingPrice,
+        taxAmount: taxPrice,
+        totalAmount: totalPrice,
+      };
+
+      stripeCheckoutSession(orderData);
     }
   };
 
@@ -97,7 +123,12 @@ const PaymentMethod = () => {
               </label>
             </div>
 
-            <button id="shipping_btn" type="submit" className="btn py-2 w-100">
+            <button
+              id="shipping_btn"
+              type="submit"
+              className="btn py-2 w-100"
+              disabled={isLoading}
+            >
               CONTINUE
             </button>
           </form>

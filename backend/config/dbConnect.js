@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export const connectDatabase = () => {
-
+    
     let DB_URI = "";
 
     if(process.env.NODE_DEV === 'DEVELOPMENT') DB_URI = process.env.DB_LOCAL_URI;
