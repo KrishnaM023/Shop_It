@@ -40,7 +40,7 @@ const PaymentMethod = () => {
     }
 
     if (isSuccess) {
-      navigate("/");
+      navigate("/me/orders?order_success=true");
     }
   }, [error, isSuccess]);
 
@@ -89,11 +89,7 @@ const PaymentMethod = () => {
       <CheckoutSteps shipping confirmOrder payment />
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
-          <form
-            className="shadow rounded bg-body"
-            action="your_submit_url_here"
-            method="post"
-          >
+          <form className="shadow rounded bg-body" onSubmit={submitHandler}>
             <h2 className="mb-4">Select Payment Method</h2>
 
             <div className="form-check">
