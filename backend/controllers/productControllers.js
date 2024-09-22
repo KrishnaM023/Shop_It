@@ -3,6 +3,7 @@ import Product from "../models/product.js";
 import Order from "../models/order.js";
 import APIFilters from "../utils/apiFilter.js";
 import ErrorHandler from "../utils/errorhandler.js";
+import { delete_file, upload_file } from "../utils/cloudinary.js";
 
 // Get all Product => /api/v1/products
 export const getProducts = catchAsyncErrors(async (req, res) => {
@@ -33,7 +34,7 @@ export const newProduct = catchAsyncErrors(async (req, res) => {
   });
 });
 
-// Get Single Product => /api/v1/products
+// Get Single Product => /api/v1/products/:id
 export const getProductDetails = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req?.params?.id).populate(
     "reviews.user"
@@ -48,7 +49,16 @@ export const getProductDetails = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Update Product Product => /api/v1/products/:id
+// Get Product - ADMIN => /api/v1/admin/products
+export const getAdminProduct = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find();
+
+  res.status(200).json({
+    products,
+  });
+});
+
+// Update Product details => /api/v1/products/:id
 export const updateProduct = catchAsyncErrors(async (req, res) => {
   let product = await Product.findById(req?.params?.id);
 
@@ -65,12 +75,58 @@ export const updateProduct = catchAsyncErrors(async (req, res) => {
   });
 });
 
+// Upload Product Images => /api/v1/admin/products/:id/upload_images
+export const uploadProductImages = catchAsyncErrors(async (req, res) => {
+  let product = await Product.findById(req?.params?.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+
+  const uploader = async (image) => upload_file(image, "shopit/products");
+
+  const urls = await Promise.all((req?.body?.images).map(uploader));
+
+  product?.images?.push(...urls);
+  await product?.save();
+
+  res.status(200).json({
+    product,
+  });
+});
+
+// Delete Product Image => /api/v1/admin/products/:id/delete_image
+export const deleteProductImage = catchAsyncErrors(async (req, res) => {
+  let product = await Product.findById(req?.params?.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+
+  const isDeleted = await delete_file(req.body.imgId);
+
+  if (isDeleted) {
+    product.images = product?.images?.filter((img) => img !== req.body.imgId);
+
+    await product?.save();
+  }
+
+  res.status(200).json({
+    product,
+  });
+});
+
 // Delete Product => /api/v1/products/:id
 export const deleteProduct = catchAsyncErrors(async (req, res) => {
   const product = await Product.findById(req?.params?.id);
 
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
+  }
+
+  // Deleting image associated with product
+  for (let i = 0; i < product?.images?.length; i++) {
+    await delete_file(product?.images[i].public_id);
   }
 
   await Product.deleteOne();
