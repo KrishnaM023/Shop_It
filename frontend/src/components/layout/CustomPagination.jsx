@@ -36,10 +36,10 @@ const CustomPagination = ({ resPerPage, filteredProductsCount }) => {
              itemsCountPerPage={resPerPage}
              totalItemsCount={filteredProductsCount}
              onChange={setCurrentPageNo}
-             nextPageText={"Next"}
-             prevPageText={"Prev"}
-             firstPageText={"First"}
-             lastPageText={"Last"}
+             nextPageText="Next"
+             prevPageText="Prev"
+             firstPageText="First"
+             lastPageText="Last"
              itemClass="page-item"
              linkClass="page-link"
            />

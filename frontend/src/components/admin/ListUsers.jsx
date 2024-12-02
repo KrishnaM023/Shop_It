@@ -68,7 +68,7 @@ const ListUsers = () => {
       rows: [],
     };
 
-    data?.users?.array.forEach((user) => {
+    data?.users?.forEach((user) => {
       users.rows.push({
         id: user?._id,
         name: user?.name,

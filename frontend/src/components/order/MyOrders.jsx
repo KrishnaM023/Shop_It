@@ -60,27 +60,29 @@ const MyOrders = () => {
       rows: [],
     };
 
-    data?.orders?.array.forEach((order) => {
-      orders.rows.push({
-        id: order?._id,
-        amount: `$${order?.totalAmount}`,
-        status: order?.paymentInfo?.status.toUpperCase(),
-        orderStatus: order?.orderStatus,
-        actions: (
-          <>
-            <Link to={`/me/order/${order?._id}`} className="btn btn-primary">
-              <i className="fa fa-eye"></i>
-            </Link>
-            <Link
-              to={`/invoice/order/${order?._id}`}
-              className="btn btn-success ms-2"
-            >
-              <i className="fa fa-print"></i>
-            </Link>
-          </>
-        ),
+    if (data?.orders && Array.isArray(data.orders)) {
+      data?.orders?.forEach((order) => {
+        orders.rows.push({
+          id: order?._id,
+          amount: `$${order?.totalAmount}`,
+          status: order?.paymentInfo?.status.toUpperCase(),
+          orderStatus: order?.orderStatus,
+          actions: (
+            <>
+              <Link to={`/me/order/${order?._id}`} className="btn btn-primary">
+                <i className="fa fa-eye"></i>
+              </Link>
+              <Link
+                to={`/invoice/order/${order?._id}`}
+                className="btn btn-success ms-2"
+              >
+                <i className="fa fa-print"></i>
+              </Link>
+            </>
+          ),
+        });
       });
-    });
+    }
 
     return orders;
   };

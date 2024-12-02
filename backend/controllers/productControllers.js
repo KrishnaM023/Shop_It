@@ -139,6 +139,7 @@ export const deleteProduct = catchAsyncErrors(async (req, res) => {
 // Create/Update Product Reviews => /api/v1/reviews
 export const createProductReview = catchAsyncErrors(async (req, res, next) => {
   const { rating, comment, productId } = req.body;
+  
 
   const review = {
     user: req?.user?._id,

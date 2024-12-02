@@ -56,7 +56,7 @@ export default function SalesChart({ salesData }) {
 
   const data = {
     labels,
-    datesets: [
+    datasets: [
       {
         labels: "Sales",
         date: salesData?.map((data) => data?.sales),

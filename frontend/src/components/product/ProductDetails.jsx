@@ -37,7 +37,7 @@ const ProductDetails = () => {
     }
   }, [isError]);
 
-  const increseQty = () => {
+  const increaseQty = () => {
     const count = document.querySelector(".count");
 
     if (count.valueAsNumber >= product?.stock) return;
@@ -46,7 +46,7 @@ const ProductDetails = () => {
     setQuantity(qty);
   };
 
-  const decreseQty = () => {
+  const decreaseQty = () => {
     const count = document.querySelector(".count");
 
     if (count.valueAsNumber <= 1) return;
@@ -60,7 +60,7 @@ const ProductDetails = () => {
       product: product?._id,
       name: product?.name,
       price: product?.price,
-      image: product?.image[0]?.url,
+      image: product?.images[0]?.url,
       stock: product?.stock,
       quantity,
     };
@@ -131,7 +131,7 @@ const ProductDetails = () => {
 
           <p id="product_price">${product?.price}</p>
           <div className="stockCounter d-inline">
-            <span className="btn btn-danger minus" onClick={decreseQty}>
+            <span className="btn btn-danger minus" onClick={decreaseQty}>
               -
             </span>
             <input
@@ -140,7 +140,7 @@ const ProductDetails = () => {
               value={quantity}
               readonly
             />
-            <span className="btn btn-primary plus" onClick={increseQty}>
+            <span className="btn btn-primary plus" onClick={increaseQty}>
               +
             </span>
           </div>

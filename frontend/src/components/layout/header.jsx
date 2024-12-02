@@ -95,7 +95,7 @@ const Header = () => {
             </div>
           </div>
         ) : (
-          !isLoading && (
+          isLoading && (
             <Link to="/login" className="btn ms-4" id="login_btn">
               {" "}
               Login{" "}

@@ -63,7 +63,7 @@ const ListProducts = () => {
       rows: [],
     };
 
-    data?.products?.array.forEach((product) => {
+    data?.products?.forEach((product) => {
       products.rows.push({
         id: product?._id,
         name: `${product?.name?.substring(0, 20)}...`,

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { json } from "react-router-dom";
 
 const initialState = {
   cartItems: localStorage.getItem("cartItems")
@@ -44,13 +43,14 @@ export const cartSlice = createSlice({
       state.cartItems = [];
     },
     saveShippingInfo: (state, action) => {
-      state.shippingInfo = action.payload
+      state.shippingInfo = action.payload;
 
       localStorage.setItem("shippingInfo", JSON.stringify(state.shippingInfo));
-    }
+    },
   },
 });
 
 export default cartSlice.reducer;
 
-export const { setCartItem, removeCartItem, saveShippingInfo, clearCart } = cartSlice.actions;
+export const { setCartItem, removeCartItem, saveShippingInfo, clearCart } =
+  cartSlice.actions;

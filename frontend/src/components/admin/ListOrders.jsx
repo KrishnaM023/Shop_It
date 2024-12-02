@@ -63,7 +63,7 @@ const ListOrders = () => {
       rows: [],
     };
 
-    data?.orders?.array.forEach((order) => {
+    data?.orders?.forEach((order) => {
       orders.rows.push({
         id: order?._id,
         paymentStatus: order?.paymentInfo?.status?.toUpperCase(),

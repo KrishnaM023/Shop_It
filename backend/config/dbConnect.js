@@ -23,8 +23,8 @@ export const connectDatabase = () => {
   // Connect to the database
   mongoose
     .connect(DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      //useNewUrlParser: true,
+      //useUnifiedTopology: true,
     })
     .then((con) => {
       console.log(

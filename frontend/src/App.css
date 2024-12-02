@@ -461,7 +461,7 @@ footer {
 /* Pagination */
 .page-item.active .page-link {
   background-color: #fa9c23;
-  border-color: #fa9c23;
+  border-color: hsl(34, 68%, 88%);
 }
 
 .page-link {

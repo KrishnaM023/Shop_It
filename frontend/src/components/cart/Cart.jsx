@@ -10,7 +10,7 @@ const Cart = () => {
 
   const { cartItems } = useSelector((state) => state.cart);
 
-  const increseQty = (item, quantity) => {
+  const increaseQty = (item, quantity) => {
     const newQty = quantity + 1;
 
     if (newQty > item?.stock) return;
@@ -18,7 +18,7 @@ const Cart = () => {
     setItemToCart(item, newQty);
   };
 
-  const decreseQty = (item, quantity) => {
+  const decreaseQty = (item, quantity) => {
     const newQty = quantity - 1;
 
     if (newQty <= 0) return;
@@ -86,7 +86,7 @@ const Cart = () => {
                         <div className="stockCounter d-inline">
                           <span
                             className="btn btn-danger minus"
-                            onClick={() => decreseQty(item, item.quantity)}
+                            onClick={() => decreaseQty(item, item.quantity)}
                           >
                             {" "}
                             -{" "}
@@ -99,7 +99,7 @@ const Cart = () => {
                           />
                           <span
                             className="btn btn-primary plus"
-                            onClick={() => increseQty(item, item.quantity)}
+                            onClick={() => increaseQty(item, item.quantity)}
                           >
                             {" "}
                             +{" "}
@@ -110,7 +110,7 @@ const Cart = () => {
                         <i
                           id="delete_cart_item"
                           className="fa fa-trash btn btn-danger"
-                          onClick={removeCartItemHandler(item?.product)}
+                          onClick={() => removeCartItemHandler(item?.product)}
                         ></i>
                       </div>
                     </div>

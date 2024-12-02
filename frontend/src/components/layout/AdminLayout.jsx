@@ -21,7 +21,7 @@ const AdminLayout = ({ children }) => {
     {
       name: "Order",
       url: "/admin/orders",
-      icon: "fas fa-recipt",
+      icon: "fa-sharp fa-solid fa-circle-info",
     },
     {
         name: "Users",

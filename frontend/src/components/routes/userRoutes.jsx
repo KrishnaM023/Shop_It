@@ -1,7 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
-import Home from "../Home";
 import ProductDetails from "../product/ProductDetails";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
@@ -19,6 +18,7 @@ import PaymentMethod from "../cart/PaymentMethod";
 import MyOrders from "../order/MyOrders";
 import OrderDetails from "../order/OrderDetails";
 import Invoice from "../invoice/invoice";
+import Home from "../Home";
 
 const userRoutes = () => {
   return (
@@ -50,7 +50,7 @@ const userRoutes = () => {
       />
 
       <Route
-        path="/me/update_avatar"
+        path="/me/upload_avatar"
         element={
           <ProtectedRoute>
             <UploadAvatar />

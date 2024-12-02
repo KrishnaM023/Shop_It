@@ -59,10 +59,10 @@ const Home = () => {
               ))}
             </div>
           </section>
-
+           
           <CustomPagination
-            resPerPage={data?.resPerPage}
-            filteredProductsCount={data?.filteredProductsCount}
+            resPerPage={data.resPerPage}
+            filteredProductsCount={data.filteredProductsCount}
           />
         </div>
       </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLoginMutation } from "../../redux/api/authApi";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 
 const Login = () => {
@@ -11,19 +11,19 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const [login, { isLoading, error, data }] = useLoginMutation();
+  const [login, { isLoading, isError, error, data }] = useLoginMutation();
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
     }
-    if (error) {
-      toast.error(error?.data?.message);
+    if (isError) {
+      toast.error(error?.data?.message || "Login Failed!");
     }
-  }, [error, isAuthenticated]);
+  }, [error, isError, isAuthenticated]);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     const loginData = {
@@ -31,7 +31,7 @@ const Login = () => {
       password,
     };
 
-    login(loginData);
+    await login(loginData);
   };
 
   return (
@@ -69,9 +69,9 @@ const Login = () => {
               />
             </div>
 
-            <a href="/password/forgot" className="float-end mb-4">
+            <Link to="/password/forgot" className="float-end mb-4">
               Forgot Password?
-            </a>
+            </Link>
 
             <button
               id="login_button"

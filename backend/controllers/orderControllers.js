@@ -139,7 +139,7 @@ async function getSalesData(startDate, endDate) {
       // Satge 2 - Group Data
       $group: {
         _id: {
-          date: { $dateToString: { fromat: "%Y-%m-%d", date: "$createdAt" } },
+          date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
         },
         totalSales: { $sum: "$totalAmount" },
         numOrders: { $sum: 1 }, // count the number of orders
